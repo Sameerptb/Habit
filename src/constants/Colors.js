@@ -1,0 +1,17 @@
+export const Colors = {
+    homeScreen: '#EDD6F8',
+    waterColer: '#9472EA',
+    smokeColor: '#48A1AF',
+    outColor: '#96C898',
+    exerciseColor: '#E49894',
+    smokeBlue: '#BAEEFF',
+    waterPurple: '#E4CFF5',
+    outGreen: '#D7EAD8',
+    exercisePink: '#FBDBDB',
+    textMeditation: '#EC9D9D',
+    textAdventure: '#90C393',
+    textSmoke: '#58D6FF',
+    textWater: '#D29EFC',
+    progressTask: '#3A3A3A',
+    completeTask: '#151515',
+  };

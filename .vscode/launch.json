@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "reactnative",
+            "request": "launch",
+            "name": "Debug Android",
+            "platform": "android",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "reactnative",
+            "request": "launch",
+            "name": "Debug iOS",
+            "platform": "ios",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
