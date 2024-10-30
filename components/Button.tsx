@@ -1,7 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const Button = ({ onPress, textColor, icon, buttonText, size, backgroundColor }) => {
+const Button = ({ 
+  onPress, 
+  textColor, 
+  icon, 
+  buttonText, 
+  size, 
+  backgroundColor, 
+  textStyle
+}) => {
   const buttonSize = size || { width: 70, height: 27 };
   const buttonBgColor = backgroundColor || 'white';
 
@@ -11,7 +19,7 @@ const Button = ({ onPress, textColor, icon, buttonText, size, backgroundColor })
       onPress={onPress}
     >
       {icon && <Image source={icon} style={styles.icon} />}
-      <Text style={[styles.text, { color: textColor }]}>{buttonText}</Text>
+      <Text style={[styles.text, { color: textColor }, textStyle]}>{buttonText}</Text>
     </TouchableOpacity>
   );
 };
@@ -33,9 +41,9 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   text: {
-    fontFamily:'roboto',
-    fontSize:11,
-    fontWeight:'600',
+    fontFamily: 'Roboto_700Bold',
+    fontSize: 11,
+    fontWeight: '600',
     bottom: 1.5,
     resizeMode: 'contain',
   },

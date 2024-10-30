@@ -104,9 +104,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   monthText: {
-    fontFamily:'Roboto',
+    fontFamily:'Roboto_500Medium',
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '500',
     color:'#444444',
   },
   monthNav: {
@@ -136,17 +136,19 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   dayLabel: {
+    fontFamily:'Roboto_700Bold',
     fontWeight: '600',
     color: '#60BFD3',
     fontSize: 12,
     paddingTop: 15,
   },
   dayText: {
+    fontFamily:'Roboto_500Medium',
     fontWeight: '500',
     color: '#000000',
     fontSize: 12,

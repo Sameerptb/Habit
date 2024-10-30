@@ -1,24 +1,9 @@
 import { Colors } from "./Colors";
 
 const Data = [
+
     {
         id: 1,
-        title: "Glass of Water",
-        content: "Drink 10 cups Water",
-        time: "6:00 am - 6:00 pm",
-        foregroundColor: Colors.waterColer,
-        habitImage: require('../../assets/images/Bottle of water.png'),
-        plantImage: require('../../assets/images/planet.png'),
-        flowerImage: require('../../assets/images/flower-pot 1.png'),
-        exportImage: require('../../assets/images/Export%.png'),
-        backImage: require('../../assets/background/violet.png'),
-        backImageSize: { width: 74.7, height: 78.93 },
-        cardColor: Colors.waterPurple,
-        buttonText: "Health",
-        buttonColor: Colors.textWater,
-    },
-    {
-        id: 2,
         title: "Don't smoke",
         content: "Don't smoke",
         time: "6:00 am - 10:00 am",
@@ -32,6 +17,22 @@ const Data = [
         cardColor: Colors.smokeBlue,
         buttonText: "Health",
         buttonColor: Colors.textSmoke,
+    },
+    {
+        id: 2,
+        title: "Glass of Water",
+        content: "Drink 10 cups Water",
+        time: "6:00 am - 6:00 pm",
+        foregroundColor: Colors.waterColer,
+        habitImage: require('../../assets/images/Bottle of water.png'),
+        plantImage: require('../../assets/images/planet.png'),
+        flowerImage: require('../../assets/images/flower-pot 1.png'),
+        exportImage: require('../../assets/images/Export%.png'),
+        backImage: require('../../assets/background/violet.png'),
+        backImageSize: { width: 74.7, height: 78.93 },
+        cardColor: Colors.waterPurple,
+        buttonText: "Health",
+        buttonColor: Colors.textWater,
     },
     {
         id: 3,

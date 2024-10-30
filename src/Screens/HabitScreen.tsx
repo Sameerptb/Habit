@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, StyleSheet, Image, StatusBar, SafeAreaView } from 'react-native';
 import HabitCard from '../../components/task/HabitCard';
+import { useTaskContext } from '../../components/TaskContext';
 
-const HabitScreen = ({ route }) => {
-  const { content, time, habitImage, plantImage, foregroundColor } = route.params;
+const HabitScreen = ({ route}) => {
+  const { content, habitImage, plantImage, foregroundColor,id } = route.params;
+  const { handleCompleteTask } = useTaskContext();
 
   return (
      <View style={[styles.container, { backgroundColor: foregroundColor }]}>
       
-      <StatusBar barStyle="light-content" backgroundColor={foregroundColor} />
+      <StatusBar backgroundColor={foregroundColor} />
       <Text style={styles.title}>{content}</Text>
       
       <View style={styles.imageContainer}>
@@ -18,7 +20,7 @@ const HabitScreen = ({ route }) => {
       </View>
 
       <View style={styles.cardContainer}>
-        <HabitCard />
+        <HabitCard onCompleteTask={handleCompleteTask} id={id}/>
       </View>
       
     </View>
@@ -32,11 +34,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   title: {
-    fontFamily:'roboto',
+    fontFamily:'Roboto_500Medium',
     fontSize: 30,
     fontWeight: '500',
     color: 'white',
-    top:-20,
+    top:-40,
     zIndex:2,
   },
   imageContainer: {

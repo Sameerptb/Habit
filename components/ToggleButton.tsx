@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
 import HabitsScreen from './HabitsScreen';
 import TasksScreen from './TasksScreen';
 
@@ -12,10 +12,8 @@ const ToggleSwitch = () => {
 
   return (
     <View style={styles.container}>
-      {/* Background screens */}
       {activeButton === 'habits' ? <HabitsScreen /> : <TasksScreen />}
 
-      {/* Switch container */}
       <View style={styles.switchContainer}>
         <TouchableOpacity
           style={[
@@ -70,14 +68,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 2,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
   },
   button: {
     position: 'absolute',
@@ -87,6 +77,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FDFDFD',
     borderRadius: 27,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
   },
   habitsButton: {
     width: 158,
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
   },
   activeButton: {
     backgroundColor: '#BAEEFF',
+    
   },
   activeButtonZIndex: {
     zIndex: 3,
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   buttonText: {
-    fontFamily: 'arial',
+    fontFamily: 'Arial',
     fontWeight: '400',
     fontSize: 13,
     color: '#272727',

@@ -1,20 +1,35 @@
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, StatusBar } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Data from '../constants/Data';
 import HomeCard from '../../components/task/HomeCard';
 import SearchBar from '../../components/SearchBar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import BottomSheet from '../../components/task/BottomSheet';
+import { useTaskContext } from '../../components/TaskContext';
+
 
 const Home = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedItem, setSelectedItem] = useState(Data[0]);
-  const bottomSheetItem = Data[1];
+  const { selectedItem, handleCompleteTask } = useTaskContext()
+  const [bottomSheetData, setBottomSheetData] = useState(selectedItem);
+
+  useEffect(() => {
+    if (selectedItem === Data[2]) {
+      setBottomSheetData(Data[1]);
+    } else if (selectedItem === Data[3]) {
+      setBottomSheetData(Data[2]);
+    } else if (selectedItem === Data[1]) {
+      setBottomSheetData(Data[0]);
+    } else {
+      const currentIndex = Data.indexOf(selectedItem);
+      const nextIndex = (currentIndex + 1) % Data.length;
+      setBottomSheetData(Data[nextIndex]);
+    }
+  }, [selectedItem]);
 
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
   };
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       
@@ -33,6 +48,7 @@ const Home = ({ navigation }) => {
                 onSubmitEditing={handleSearch}
               />
               <HomeCard
+                id={selectedItem.id}
                 foregroundColor={selectedItem.foregroundColor}
                 content={selectedItem.content}
                 time={selectedItem.time}
@@ -45,6 +61,7 @@ const Home = ({ navigation }) => {
                     habitImage: selectedItem.habitImage,
                     plantImage: selectedItem.plantImage,
                     foregroundColor: selectedItem.foregroundColor,
+                    id: selectedItem.id,
                   });
                 }}
               />
@@ -53,7 +70,7 @@ const Home = ({ navigation }) => {
         </ScrollView>
         </SafeAreaView>
       </View>
-      <BottomSheet item={bottomSheetItem} />
+      <BottomSheet item={bottomSheetData} />
     </GestureHandlerRootView>
   );
 };
@@ -66,17 +83,17 @@ const styles = StyleSheet.create({
   contentContainer: {
     justifyContent: 'flex-start',
     padding: 20,
-    paddingTop:5,
+    paddingTop:65,
   },
   text: {
     fontSize: 14,
-    fontWeight: '400',
-    fontFamily:'roboto',
+    fontFamily:'Roboto_400Regular',
+    fontWeight:'400',
     marginLeft: 15,
     marginTop: 10,
   },
   title: {
-    fontFamily:'roboto',
+    fontFamily:'Roboto_400Regular',
     fontSize: 36,
     fontWeight: '400',
     marginLeft: 15,

@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import Button from '../Button';
+import CircularProgressBas from '../CircularProgressBas';
+import { ProgressContext } from '../ProgressContext';
 
-const HabitCard = () => {
+const HabitCard = ({ onCompleteTask, id }) => {
+  const { progressValues, setProgressValue } = useContext(ProgressContext);
+
+  const handleTaskProgress = () => {
+    const newProgress = Math.min(progressValues[id] + 10, 100);
+    setProgressValue(id, newProgress);
+  };
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.topCard}>
@@ -19,18 +28,33 @@ const HabitCard = () => {
       <View style={styles.bottomCard}>
         <Text style={styles.bottomText}>Goal Previews</Text>
         <View style={styles.progressContainer}>
-          <Image source={require('../../assets/images/progressimg.png')} style={{ width: 108, height: 91, marginRight: 90 }} style={styles.progressImage} />
-          <Button 
-          icon={require('../../assets/icons/work-in-progress-2 1.png')}
-          buttonText={'   progrss task: 80%'}
-          size={{ width: 165, height: 45 }}
+          <View style={styles.progressImage}>
+            <CircularProgressBas value={progressValues[id]} outerRadius={52} innerRadius={41} colors={{ outer: '#FF81AE', inner: '#45D1FF' }} />
+          </View>
+          <Button
+            icon={require('../../assets/icons/work-in-progress-2 1.png')}
+            buttonText={`   Progress Task: ${progressValues[id]}%`}
+            size={{ width: 165, height: 45 }}
+            onPress={handleTaskProgress}
+            textStyle={{
+              fontFamily: 'Roboto_400Regular',
+              fontSize: 12,
+              fontWeight: '400',
+            }}
+            textColor={'#3A3A3A'}
           />
         </View>
-        <Button 
-        buttonText={'Complete Task'}
-        textColor={'black'}
-        size={{ width: 158, height: 42 }}
-        backgroundColor={'#BAEEFF'}
+        <Button
+          buttonText={'Complete Task'}
+          textColor={'#151515'}
+          size={{ width: 158, height: 42 }}
+          backgroundColor={'#BAEEFF'}
+          onPress={onCompleteTask}
+          textStyle={{
+            fontFamily: 'Arial',
+            fontSize: 14,
+            fontWeight: '500',
+          }}
         />
       </View>
     </View>
@@ -68,7 +92,7 @@ const styles = StyleSheet.create({
     width: 64,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#DEDEDE', 
+    shadowColor: '#DEDEDE',
     shadowOffset: {
       width: 0,
       height: 3,
@@ -82,7 +106,7 @@ const styles = StyleSheet.create({
     height: 64,
     width: 64,
     borderRadius: 50,
-    backgroundColor: '#F0F0F0', 
+    backgroundColor: '#F0F0F0',
     justifyContent: 'center',
   },
   dateText: {
@@ -91,7 +115,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   dayText: {
-    fontFamily:'roboto',
+    fontFamily: 'Roboto_400Regular',
     color: '#2C2C2CB2',
     fontSize: 12,
     fontWeight: '400',
@@ -104,13 +128,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   topText: {
-    fontFamily:'roboto',
+    fontFamily: 'Roboto_400Regular',
     fontSize: 14,
     fontWeight: '400',
     color: '#131313',
   },
   bottomText: {
-    fontFamily:'roboto',
+    fontFamily: 'Roboto_500Medium',
     fontSize: 24,
     fontWeight: '500',
     color: '#444444',
@@ -121,17 +145,16 @@ const styles = StyleSheet.create({
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'flex-start',
+    justifyContent: 'flex-start',
     marginRight: 10,
-    bottom:20,
+    bottom: 20,
     zIndex: 1,
   },
   progressImage: {
-    width: 108,
-    height: 95,
+    width: 120,
+    height: 110,
     marginRight: 10,
   },
-
 });
 
 export default HabitCard;

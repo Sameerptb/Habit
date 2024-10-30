@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
     bottom:250
   },
   text: {
+    fontFamily:'Arial',
+    fontWeight:'700',
     fontSize: 20,
   },
 });

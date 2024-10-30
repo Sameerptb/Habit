@@ -76,11 +76,13 @@ const styles = StyleSheet.create({
     borderRadius:2,
   },
   textStyle:{
+    fontFamily:'Arial',
     fontSize:17,
     fontWeight:'700',
     position:'relative',
-    marginLeft:40,
-    marginTop:-5,
+    marginLeft:30,
+    marginTop:-25,
     padding:10,
+
   },
 })

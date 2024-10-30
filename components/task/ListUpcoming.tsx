@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    fontFamily:'Arial',
     fontSize: 14,
     fontWeight: '700',
     textAlign: 'center',

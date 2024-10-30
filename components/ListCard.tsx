@@ -63,11 +63,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   text: {
+    fontFamily:'Arial',
     fontSize: 14,
     fontWeight: '700',
     textAlign: 'center',
   },
   time: {
+    fontFamily:'Arial',
     fontSize: 11,
     fontWeight: '400',
     textAlign: 'center',

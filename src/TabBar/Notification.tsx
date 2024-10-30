@@ -1,12 +1,12 @@
 import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
 
-const Notificatin = () => {
+const Notification = () => {
   return (
     <SafeAreaView>
-      <Text>Notificatin</Text>
+      <Text>Notification</Text>
     </SafeAreaView>
   )
 }
 
-export default Notificatin
+export default Notification;
