@@ -1,23 +1,25 @@
-import * as React from 'react'; 
-import { GestureHandlerRootView } from 'react-native-gesture-handler'; 
-import { NavigationContainer } from '@react-navigation/native'; 
-import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; 
-import CustomHeader from './components/CustomHeader'; 
-import TabBar from './components/TabBar'; 
-import Home from './src/TabBar/Home'; 
-import Settings from './src/TabBar/Settings'; 
-import Notification from './src/TabBar/Notification'; 
-import Profile from './src/TabBar/Profile'; 
-import UpcomingScreen from './src/Screens/UpcomingScreen'; 
-import HabitScreen from './src/Screens/HabitScreen'; 
-import { ProgressProvider } from './components/ProgressContext'; 
-import { TaskProvider } from './components/TaskContext'; 
-import { useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from '@expo-google-fonts/roboto'; 
+import React, { useCallback, useEffect, useState } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from '@expo-google-fonts/roboto';
 
-const Tab = createBottomTabNavigator(); 
-const Stack = createNativeStackNavigator(); 
+import CustomHeader from './components/CustomHeader';
+import TabBar from './components/TabBar';
+import Home from './src/TabBar/Home';
+import Settings from './src/TabBar/Settings';
+import Notification from './src/TabBar/Notification';
+import Profile from './src/TabBar/Profile';
+import UpcomingScreen from './src/Screens/UpcomingScreen';
+import HabitScreen from './src/Screens/HabitScreen';
+import { ProgressProvider } from './components/ProgressContext';
+import { TaskProvider } from './components/TaskContext';
+
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const getHeaderOptions = (navigation) => {
   const currentRoute = navigation.getState().routes[navigation.getState().index].name;
@@ -53,77 +55,86 @@ const getHeaderOptions = (navigation) => {
   };
 };
 
-function TabNavigator() { 
-  return ( 
-    <Tab.Navigator 
-      tabBar={(props) => <TabBar {...props} />} 
-      screenOptions={{ 
-        headerStyle: { backgroundColor: 'transparent' }, 
-        headerTransparent: true, 
-        headerShadowVisible: false, 
+function TabNavigator() {
+  return (
+    <Tab.Navigator
+      tabBar={(props) => <TabBar {...props} />}
+      screenOptions={{
+        headerStyle: { backgroundColor: 'transparent' },
+        headerTransparent: true,
+        headerShadowVisible: false,
         headerShown: false,
-      }}  
-    > 
-      <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} /> 
-      <Tab.Screen name="Settings" component={Settings} options={({ navigation }) => getHeaderOptions(navigation, false)} /> 
-      <Tab.Screen name="Notification" component={Notification} options={({ navigation }) => getHeaderOptions(navigation, false)} /> 
-      <Tab.Screen name="Profile" component={Profile} options={({ navigation }) => getHeaderOptions(navigation, false)} /> 
-    </Tab.Navigator> 
-  ); 
-} 
+      }}
+    >
+      <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
+      <Tab.Screen name="Settings" component={Settings} options={({ navigation }) => getHeaderOptions(navigation, false)} />
+      <Tab.Screen name="Notification" component={Notification} options={({ navigation }) => getHeaderOptions(navigation, false)} />
+      <Tab.Screen name="Profile" component={Profile} options={({ navigation }) => getHeaderOptions(navigation, false)} />
+    </Tab.Navigator>
+  );
+}
 
-export default function App() { 
-  const [fontsLoaded] = useFonts({
+export default function App() {
+  const [customFontsLoaded, setCustomFontsLoaded] = useState(false);
+  const [robotoLoaded] = useFonts({
     Roboto_400Regular,
     Roboto_500Medium,
     Roboto_700Bold,
   });
 
-  const loadCustomFonts = async () => {
-    await Font.loadAsync({
-      Arial: require('./assets/fonts/Arial.ttf'),
-    });
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
+    
+    const loadCustomFonts = async () => {
+      await Font.loadAsync({
+        Arial: require('./assets/fonts/Arial.ttf'),
+      });
+      setCustomFontsLoaded(true);
+    };
     loadCustomFonts();
   }, []);
 
-  if (!fontsLoaded) {
+  const onLayoutRootView = useCallback(async () => {
+    if (robotoLoaded && customFontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [robotoLoaded, customFontsLoaded]);
+
+  if (!robotoLoaded || !customFontsLoaded) {
     return null;
   }
 
-  return ( 
+  return (
     <TaskProvider>
       <ProgressProvider>
-        <GestureHandlerRootView> 
-          <NavigationContainer> 
-            <Stack.Navigator 
-              screenOptions={{ 
-                headerStyle: { backgroundColor: 'transparent' }, 
-                headerTransparent: true, 
-                headerShadowVisible: false, 
-              }} 
-            > 
-              <Stack.Screen 
-                name='HomeScreen' 
-                component={TabNavigator} 
-                options={({ navigation }) => getHeaderOptions(navigation, true)} 
-              /> 
-              <Stack.Screen 
-                name='Habit' 
-                component={HabitScreen}  
-                options={({ navigation }) => getHeaderOptions(navigation, false)} 
-              /> 
-              <Stack.Screen 
-                name='Upcoming' 
-                component={UpcomingScreen} 
-                options={({ navigation }) => getHeaderOptions(navigation, false)} 
-              /> 
-            </Stack.Navigator> 
-          </NavigationContainer> 
+        <GestureHandlerRootView onLayout={onLayoutRootView}>
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerStyle: { backgroundColor: 'transparent' },
+                headerTransparent: true,
+                headerShadowVisible: false,
+              }}
+            >
+              <Stack.Screen
+                name='HomeScreen'
+                component={TabNavigator}
+                options={({ navigation }) => getHeaderOptions(navigation, true)}
+              />
+              <Stack.Screen
+                name='Habit'
+                component={HabitScreen}
+                options={({ navigation }) => getHeaderOptions(navigation, false)}
+              />
+              <Stack.Screen
+                name='Upcoming'
+                component={UpcomingScreen}
+                options={({ navigation }) => getHeaderOptions(navigation, false)}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
         </GestureHandlerRootView>
-      </ProgressProvider> 
+      </ProgressProvider>
     </TaskProvider>
-  ); 
+  );
 }
